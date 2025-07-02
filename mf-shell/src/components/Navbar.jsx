@@ -7,11 +7,11 @@ export const Navbar = () => {
     <nav className="bg-indigo-800 text-white shadow px-6 py-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-4">
-          <Link to="/">
+          <Link to="/" className="group">
             <img
               src={LogoHeader}
               alt="Logo"
-              className="w-32 md:w-40"
+              className="w-32 md:w-40 transition duration-300 ease-in-out group-hover:opacity-80 group-hover:scale-105"
             />          
           </Link>
         </div>
@@ -20,6 +20,6 @@ export const Navbar = () => {
           <Link to="/characters" className="hover:text-lime-300 transition">Personajes</Link>
         </div>
       </div>
-    </nav>
+    </nav>    
   );
 }
