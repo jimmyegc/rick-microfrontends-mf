@@ -1,13 +1,8 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Card } from '../Card';
 
-const mockChar = {
-  id: 1,
-  name: 'Rick Sanchez',
-  species: 'Human',
-  status: 'Alive',
-  image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-};
+const mockChar = { id:1, name: 'Rick Sanchez', species: 'Human', status: 'Alive', image: '...' };
 
 test('renderiza información básica del personaje', () => {
   render(<Card char={mockChar} />);

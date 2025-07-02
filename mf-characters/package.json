@@ -27,6 +27,7 @@
     "html-webpack-plugin": "^5.5.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.0.3",
+    "jest-environment-jsdom": "^30.0.2",
     "postcss": "^8.5.6",
     "postcss-loader": "^7.3.3",
     "style-loader": "^3.3.3",
@@ -36,14 +37,19 @@
     "webpack-dev-server": "^4.15.1"
   },
   "jest": {
-  "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"],
-  "moduleNameMapper": {
-    "\\.(css|scss)$": "identity-obj-proxy"
-  },
-  "testEnvironment": "jsdom",
-  "transform": {
-    "^.+\\.jsx?$": "babel-jest"
-  },
-  "moduleFileExtensions": ["js", "jsx"]
-}
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "identity-obj-proxy"
+    },
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ]
+  }
 }
