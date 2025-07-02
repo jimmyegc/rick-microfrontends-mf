@@ -5,6 +5,10 @@ Aplicación web construida con React y arquitectura de Microfrontends usando Web
 
 ---
 
+## 🎨 Vista previa
+
+![Vista de la aplicación](./screenshot.png)
+
 ## 🚀 Descripción
 
 Este proyecto implementa una solución frontend con tres microfrontends:
