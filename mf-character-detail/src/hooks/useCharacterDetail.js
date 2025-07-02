@@ -1,36 +1,38 @@
 import { useState, useEffect } from 'react';
+import { getCharacterById } from '../services/api';
 
 export function useCharacterDetail(id) {
   const [character, setCharacter] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!id) return;
 
-    const controller = new AbortController();
+    let active = true;
+    setLoading(true);
+    setError(null);
 
-    const fetchCharacter = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(`https://rickandmortyapi.com/api/character/${id}`, {
-          signal: controller.signal,
-        });
-        const data = await res.json();
-        setCharacter(data);
-      } catch (error) {
-        if (error.name !== 'AbortError') {
-          console.error('Error fetching character:', error);
+    getCharacterById(id)
+      .then((data) => {
+        if (active) {
+          setCharacter(data);
         }
-        setCharacter(null);
-      } finally {
-        setLoading(false);
-      }
+      })
+      .catch(() => {
+        if (active) {
+          setError('No se pudo cargar el personaje.');
+          setCharacter(null);
+        }
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
     };
-
-    fetchCharacter();
-
-    return () => controller.abort();
   }, [id]);
 
-  return { character, loading };
+  return { character, loading, error };
 }

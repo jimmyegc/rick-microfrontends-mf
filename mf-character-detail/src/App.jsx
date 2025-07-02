@@ -6,10 +6,22 @@ import './index.css';
 
 export default function CharacterDetail() {
   const { id } = useParams();
-  const { character: char, loading } = useCharacterDetail(id);
+  const { character: char, loading, error } = useCharacterDetail(id);
 
-  if (loading || !char) {
+  if (loading) {
     return <div className="text-center p-10">Cargando...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="text-center p-4 bg-red-100 text-red-700 rounded shadow mb-4 max-w-2xl mx-auto">
+        {error}
+      </div>
+    );
+  }
+  
+  if (!char) {
+    return <div className="text-center p-10">Personaje no encontrado.</div>;
   }
 
   return (

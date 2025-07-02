@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getCharacters } from '../services/api';
 
 export function useCharacters(filters, page) {
   const [characters, setCharacters] = useState([]);
@@ -6,32 +7,28 @@ export function useCharacters(filters, page) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const controller = new AbortController();
-
-    const fetchCharacters = async () => {
-      setLoading(true);
-      try {
-        const query = new URLSearchParams({ ...filters, page }).toString();
-        const res = await fetch(`https://rickandmortyapi.com/api/character?${query}`, {
-          signal: controller.signal,
-        });
-        const data = await res.json();
-
-        setCharacters(data.results || []);
-        setInfo(data.info || null);
-      } catch (error) {
-        if (error.name !== 'AbortError') {
-          console.error('Error fetching characters:', error);
+    let active = true;
+    setLoading(true);
+    getCharacters(filters, page)
+      .then((data) => {
+        if (active) {
+          setCharacters(data.results || []);
+          setInfo(data.info || null);
         }
-        setCharacters([]);
-        setInfo(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+      })
+      .catch(() => {
+        if (active) {
+          setCharacters([]);
+          setInfo(null);
+        }
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
 
-    fetchCharacters();
-    return () => controller.abort();
+    return () => {
+      active = false;
+    };
   }, [filters, page]);
 
   return { characters, info, loading };
